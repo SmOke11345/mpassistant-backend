@@ -1,0 +1,64 @@
+{
+  "name": "mpassistant-backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mpassistant-backend/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/mpassistant-backend",
+        "main": "apps/mpassistant-backend/src/main.ts",
+        "tsConfig": "apps/mpassistant-backend/tsconfig.app.json",
+        "assets": ["apps/mpassistant-backend/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/mpassistant-backend/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "mpassistant-backend:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mpassistant-backend:build:development"
+        },
+        "production": {
+          "buildTarget": "mpassistant-backend:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/mpassistant-backend/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/mpassistant-backend/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
