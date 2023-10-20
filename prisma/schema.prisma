@@ -1,0 +1,22 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Добавить модель (сущность)
+model Users {
+  id         Int     @id @default(autoincrement())
+  full_name  String
+  password   String
+  tel        String
+  email      String
+  promo_code String
+  confirm    Boolean @default(true)
+}
